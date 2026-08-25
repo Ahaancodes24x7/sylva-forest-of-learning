@@ -271,7 +271,7 @@ export default function ForestScene({
     if (visibleCourses.length === 1) {
       return { x: visibleCourses[0]!.grovePosition[0], z: visibleCourses[0]!.grovePosition[1], distance: 12 };
     }
-    return { x: 0, z: 0, distance: 22 };
+    return { x: 0, z: 0, distance: 18 };
   }, [selectedConceptId, visibleCourses]);
 
   return (
@@ -281,13 +281,13 @@ export default function ForestScene({
       gl={{ antialias: true }}
       style={{ background: "transparent" }}
     >
-      <fog attach="fog" args={[palette.fog, 24, 56]} />
+      <fog attach="fog" args={[palette.fog, 30, 74]} />
       <hemisphereLight args={[palette.pollen, palette.groundDark, isDark ? 0.55 : 0.95]} />
       <directionalLight position={[9, 14, 6]} intensity={isDark ? 0.9 : 1.5} color={palette.pollen} />
       <ambientLight intensity={isDark ? 0.35 : 0.5} />
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
-        <circleGeometry args={[30, 64]} />
+        <circleGeometry args={[44, 64]} />
         <meshStandardMaterial color={palette.ground} roughness={1} />
       </mesh>
 

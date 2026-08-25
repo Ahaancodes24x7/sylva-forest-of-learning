@@ -16,7 +16,7 @@ export function ReEntryCard({ onResume }: { onResume?: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           exit={reduced ? { opacity: 0 } : { opacity: 0, y: 30 }}
           transition={{ type: "spring", stiffness: 110, damping: 18 }}
-          className="fixed bottom-20 left-1/2 z-30 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-3xl bg-card/85 p-5 backdrop-blur-xl shadow-soft md:bottom-6"
+          className="fixed bottom-20 left-1/2 z-30 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-3xl bg-card/85 p-5 backdrop-blur-xl shadow-soft md:bottom-6 md:left-auto md:right-6 md:translate-x-0"
           aria-label="Welcome back"
         >
           <div className="flex items-start gap-4">

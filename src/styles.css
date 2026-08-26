@@ -48,6 +48,10 @@
   --color-paper: var(--paper);
   --color-terracotta: var(--terracotta);
 
+  --color-course-1: var(--course-1);
+  --color-course-2: var(--course-2);
+  --color-course-3: var(--course-3);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -98,6 +102,10 @@
   --input: oklch(0.89 0.016 88);
   --ring: oklch(0.575 0.058 150);
 
+  --course-1: oklch(0.63 0.055 150);
+  --course-2: oklch(0.66 0.085 45);
+  --course-3: oklch(0.63 0.05 240);
+
   --chart-1: oklch(0.318 0.043 160);
   --chart-2: oklch(0.575 0.058 150);
   --chart-3: oklch(0.833 0.116 88);
@@ -146,6 +154,10 @@
   --border: oklch(0.945 0.014 88 / 0.12);
   --input: oklch(0.945 0.014 88 / 0.16);
   --ring: oklch(0.72 0.075 150);
+
+  --course-1: oklch(0.7 0.06 150);
+  --course-2: oklch(0.72 0.085 45);
+  --course-3: oklch(0.7 0.055 240);
 
   --chart-1: oklch(0.72 0.075 150);
   --chart-2: oklch(0.6 0.06 150);

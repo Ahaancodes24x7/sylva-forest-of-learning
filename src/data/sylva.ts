@@ -284,3 +284,61 @@ export const stateMeta: Record<
   "not-covered": { label: "Dormant", description: "Not yet covered", dot: "bg-muted-foreground/40" },
   "at-risk": { label: "Needs attention", description: "Worth time this week", dot: "bg-canopy" },
 };
+
+/* ------------------------------------------------------------------ *
+ * Imported documents → new concepts in an existing course's grove.
+ * ------------------------------------------------------------------ */
+
+export type ImportedDoc = {
+  id: string;
+  courseId: string;
+  fileName: string;
+  kind: string;
+  pages: number;
+  words: number;
+  headings: number;
+  addedConcepts: string[];
+  at: string;
+};
+
+export const importedDocs: ImportedDoc[] = [];
+
+const slug = (s: string) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "concept";
+
+/** Adds concepts to a course grove (mutates the seeded course). Returns added ids. */
+export function addConceptsToCourse(courseId: string, names: string[]): string[] {
+  const course = courseById(courseId);
+  if (!course) return [];
+  const added: string[] = [];
+  names.forEach((name, i) => {
+    const id = `${courseId}-${slug(name)}`;
+    if (course.concepts.some((concept) => concept.id === id)) return;
+    const index = course.concepts.length + i;
+    const angle = index * 2.399;
+    const radius = 1.6 + Math.sqrt(index) * 1.05;
+    course.concepts.push({
+      id,
+      courseId,
+      name,
+      state: "not-covered",
+      mastery: 0.04,
+      lastReviewed: "not started",
+      decayHalfLife: 6,
+      note: "Found in a document you imported. A seed, waiting.",
+      pos: [Number((Math.cos(angle) * radius).toFixed(2)), Number((Math.sin(angle) * radius).toFixed(2))],
+    });
+    added.push(id);
+  });
+  return added;
+}
+
+export function recordImport(doc: Omit<ImportedDoc, "id" | "at">) {
+  importedDocs.push({ ...doc, id: crypto.randomUUID(), at: new Date().toISOString() });
+}
+
+export const courseAccent: Record<string, string> = {
+  ochem: "var(--course-1)",
+  cs101: "var(--course-3)",
+  engcomp: "var(--course-2)",
+};

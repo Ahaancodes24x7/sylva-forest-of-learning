@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ForestRouteImport } from './routes/forest'
 import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -19,6 +20,11 @@ import { Route as TimelineRouteImport } from './routes/timeline'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForestRoute = ForestRouteImport.update({
@@ -49,6 +55,7 @@ const TimelineRoute = TimelineRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/forest': typeof ForestRoute
   '/knowledge': typeof KnowledgeRoute
   '/profile': typeof ProfileRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/forest': typeof ForestRoute
   '/knowledge': typeof KnowledgeRoute
   '/profile': typeof ProfileRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/forest': typeof ForestRoute
   '/knowledge': typeof KnowledgeRoute
   '/profile': typeof ProfileRoute
@@ -75,12 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/forest' | '/knowledge' | '/profile' | '/settings' | '/timeline'
+    | '/'
+    | '/auth'
+    | '/forest'
+    | '/knowledge'
+    | '/profile'
+    | '/settings'
+    | '/timeline'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forest' | '/knowledge' | '/profile' | '/settings' | '/timeline'
+  to:
+    | '/'
+    | '/auth'
+    | '/forest'
+    | '/knowledge'
+    | '/profile'
+    | '/settings'
+    | '/timeline'
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/forest'
     | '/knowledge'
     | '/profile'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   ForestRoute: typeof ForestRoute
   KnowledgeRoute: typeof KnowledgeRoute
   ProfileRoute: typeof ProfileRoute
@@ -104,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forest': {
@@ -146,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   ForestRoute: ForestRoute,
   KnowledgeRoute: KnowledgeRoute,
   ProfileRoute: ProfileRoute,

@@ -2,12 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
-import { LeafIcon, SettingsLeafIcon, TrailIcon, TreeIcon } from "@/components/sylva/icons";
+import { BranchIcon, LeafIcon, SettingsLeafIcon, TrailIcon, TreeIcon } from "@/components/sylva/icons";
 import { MicroLessonFlow } from "@/components/sylva/MicroLessonFlow";
 import { useSylva } from "@/components/sylva/SylvaProvider";
 
 const nav = [
   { to: "/forest", label: "Forest", Icon: TreeIcon },
+  { to: "/schedule", label: "Schedule", Icon: BranchIcon },
   { to: "/timeline", label: "Timeline", Icon: TrailIcon },
   { to: "/knowledge", label: "Knowledge", Icon: LeafIcon },
   { to: "/settings", label: "Settings", Icon: SettingsLeafIcon },

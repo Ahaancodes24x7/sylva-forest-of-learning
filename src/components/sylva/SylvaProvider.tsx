@@ -21,6 +21,9 @@ type SylvaState = {
   toggleAdaptation: (key: keyof Adaptations) => void;
   isMobile: boolean;
   isDark: boolean;
+  /** bumped whenever imported documents add concepts, to re-render the forest */
+  importVersion: number;
+  noteImport: () => void;
 };
 
 const SylvaContext = createContext<SylvaState | null>(null);
@@ -32,6 +35,7 @@ export function SylvaProvider({ children }: { children: ReactNode }) {
   const [warmStart, setWarmStart] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [importVersion, setImportVersion] = useState(0);
   const [adaptations, setAdaptations] = useState<Adaptations>({
     chunkLongTasks: true,
     warmStarts: true,
@@ -88,8 +92,10 @@ export function SylvaProvider({ children }: { children: ReactNode }) {
       toggleAdaptation: (key) => setAdaptations((prev) => ({ ...prev, [key]: !prev[key] })),
       isMobile,
       isDark,
+      importVersion,
+      noteImport: () => setImportVersion((v) => v + 1),
     }),
-    [onboarded, completeOnboarding, resetOnboarding, sprouted, lessonConceptId, warmStart, adaptations, isMobile, isDark],
+    [onboarded, completeOnboarding, resetOnboarding, sprouted, lessonConceptId, warmStart, adaptations, isMobile, isDark, importVersion],
   );
 
   return <SylvaContext.Provider value={value}>{children}</SylvaContext.Provider>;

@@ -342,3 +342,61 @@ export const courseAccent: Record<string, string> = {
   cs101: "var(--course-3)",
   engcomp: "var(--course-2)",
 };
+
+/* ------------------------------------------------------------------ *
+ * Live registry helpers (pure — the provider owns the actual state).
+ * ------------------------------------------------------------------ */
+
+export type StoredCourse = Course & { archived: boolean; accent: string };
+
+export const accentOptions = [
+  { id: "sage", label: "Sage", value: "var(--course-1)" },
+  { id: "clay", label: "Clay", value: "var(--course-2)" },
+  { id: "dusty-blue", label: "Dusty blue", value: "var(--course-3)" },
+] as const;
+
+export const conceptSlug = slug;
+
+/** Builds new dormant concepts for a course, spiralling outward from existing ones. */
+export function makeConcepts(courseId: string, names: string[], startIndex: number): Concept[] {
+  const out: Concept[] = [];
+  names.forEach((name, i) => {
+    const index = startIndex + i;
+    const angle = index * 2.399;
+    const radius = 1.6 + Math.sqrt(index + 1) * 1.05;
+    out.push({
+      id: `${courseId}-${slug(name)}`,
+      courseId,
+      name,
+      state: "not-covered",
+      mastery: 0.04,
+      lastReviewed: "not started",
+      decayHalfLife: 6,
+      note: "Found in a document you imported. A seed, waiting.",
+      pos: [Number((Math.cos(angle) * radius).toFixed(2)), Number((Math.sin(angle) * radius).toFixed(2))],
+    });
+  });
+  return out;
+}
+
+/** A brand-new, empty course grove. */
+export function createCourse(name: string, accent: string, index: number): StoredCourse {
+  const id = `${slug(name)}-${Math.random().toString(36).slice(2, 6)}`;
+  const ring = index * 2.1;
+  return {
+    id,
+    name,
+    short: name.length > 12 ? `${name.slice(0, 11)}…` : name,
+    color: "moss",
+    grovePosition: [Number((Math.cos(ring) * (7 + index * 1.5)).toFixed(2)), Number((Math.sin(ring) * 3.2).toFixed(2))],
+    concepts: [],
+    archived: false,
+    accent,
+  };
+}
+
+export const seedCourses: StoredCourse[] = courses.map((course, i) => ({
+  ...course,
+  archived: false,
+  accent: courseAccent[course.id] ?? accentOptions[i % 3]!.value,
+}));

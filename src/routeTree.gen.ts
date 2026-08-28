@@ -15,6 +15,7 @@ import { Route as ForestRouteImport } from './routes/forest'
 import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TimelineRouteImport } from './routes/timeline'
 
@@ -48,6 +49,11 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/knowledge': typeof KnowledgeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/timeline': typeof TimelineRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/knowledge': typeof KnowledgeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/timeline': typeof TimelineRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/knowledge': typeof KnowledgeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
+  '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/timeline': typeof TimelineRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/onboarding'
     | '/profile'
+    | '/schedule'
     | '/settings'
     | '/timeline'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/onboarding'
     | '/profile'
+    | '/schedule'
     | '/settings'
     | '/timeline'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/onboarding'
     | '/profile'
+    | '/schedule'
     | '/settings'
     | '/timeline'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   KnowledgeRoute: typeof KnowledgeRoute
   OnboardingRoute: typeof OnboardingRoute
   ProfileRoute: typeof ProfileRoute
+  ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
   TimelineRoute: typeof TimelineRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   KnowledgeRoute: KnowledgeRoute,
   OnboardingRoute: OnboardingRoute,
   ProfileRoute: ProfileRoute,
+  ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
   TimelineRoute: TimelineRoute,
 }

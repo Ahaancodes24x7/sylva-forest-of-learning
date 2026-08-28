@@ -38,9 +38,11 @@ function RequireAuth({ children }: { children: ReactNode }) {
 }
 
 export function AppShell({ children, bleed = false }: { children: ReactNode; bleed?: boolean }) {
-  const { lessonConceptId } = useSylva();
-
-  return <RequireAuth>{<AppShellInner bleed={bleed}>{children}</AppShellInner>}</RequireAuth>;
+  return (
+    <RequireAuth>
+      <AppShellInner bleed={bleed}>{children}</AppShellInner>
+    </RequireAuth>
+  );
 }
 
 function AppShellInner({ children, bleed = false }: { children: ReactNode; bleed?: boolean }) {

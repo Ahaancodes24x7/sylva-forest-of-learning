@@ -15,6 +15,7 @@ export type SylvaUser = {
   email: string;
   name: string;
   provider: "password" | "google";
+  createdAt: string;
 };
 
 type AuthResult = { error: string | null };

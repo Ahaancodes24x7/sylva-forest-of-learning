@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SylvaProvider } from "@/components/sylva/SylvaProvider";
-import { SylvaToaster } from "@/components/sylva/Toaster";
+import { Toaster } from "@/components/sylva/Toaster";
 import { AuthProvider } from "@/lib/auth";
 
 function NotFoundComponent() {
@@ -131,10 +131,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SylvaProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </SylvaProvider>
+      <AuthProvider>
+        <SylvaProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <Toaster />
+        </SylvaProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

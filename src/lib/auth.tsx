@@ -15,6 +15,7 @@ export type SylvaUser = {
   email: string;
   name: string;
   provider: "password" | "google";
+  createdAt: string;
 };
 
 type AuthResult = { error: string | null };
@@ -80,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: email.trim().toLowerCase(),
           name: "",
           provider: "password",
+          createdAt: new Date().toISOString(),
         });
         return { error: null };
       },
@@ -93,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: email.trim().toLowerCase(),
           name: handle.charAt(0).toUpperCase() + handle.slice(1),
           provider: "password",
+          createdAt: new Date().toISOString(),
         });
         return { error: null };
       },
@@ -103,6 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: "you@gmail.com",
           name: "",
           provider: "google",
+          createdAt: new Date().toISOString(),
         });
         return { error: null };
       },

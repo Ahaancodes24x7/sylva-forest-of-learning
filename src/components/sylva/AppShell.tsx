@@ -1,6 +1,9 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+
+import { SproutLoader } from "@/components/sylva/SproutLoader";
+import { useAuth } from "@/lib/auth";
 
 import { BranchIcon, LeafIcon, SettingsLeafIcon, TrailIcon, TreeIcon } from "@/components/sylva/icons";
 import { MicroLessonFlow } from "@/components/sylva/MicroLessonFlow";
@@ -14,7 +17,35 @@ const nav = [
   { to: "/settings", label: "Settings", Icon: SettingsLeafIcon },
 ] as const;
 
+/** Keeps the whole app behind a session; shows a calm growing state while we check. */
+function RequireAuth({ children }: { children: ReactNode }) {
+  const { user, loading } = useAuth();
+  const { hydrated } = useSylva();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/auth", search: { mode: "signin" } });
+  }, [loading, user, navigate]);
+
+  if (loading || !hydrated || !user) {
+    return (
+      <div className="grid min-h-dvh place-items-center bg-background">
+        <SproutLoader label="Finding your forest…" />
+      </div>
+    );
+  }
+  return <>{children}</>;
+}
+
 export function AppShell({ children, bleed = false }: { children: ReactNode; bleed?: boolean }) {
+  return (
+    <RequireAuth>
+      <AppShellInner bleed={bleed}>{children}</AppShellInner>
+    </RequireAuth>
+  );
+}
+
+function AppShellInner({ children, bleed = false }: { children: ReactNode; bleed?: boolean }) {
   const { lessonConceptId } = useSylva();
 
   return (

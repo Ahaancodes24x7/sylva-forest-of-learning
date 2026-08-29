@@ -5,7 +5,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
  *
  * This is a local-session implementation so the prototype is fully usable with
  * no backend. Every method below is async and returns the same shape a real
- * provider would, so swapping to Lovable Cloud (Supabase) auth is a one-step
+ * provider would, so swapping to a cloud provider (e.g. Supabase) auth is a one-step
  * change: replace the bodies of signUp / signIn / signInWithGoogle /
  * requestPasswordReset / signOut with supabase.auth.* calls and keep the rest.
  */
